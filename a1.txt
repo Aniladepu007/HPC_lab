@@ -1,0 +1,11 @@
+sudo hardinfo
+sudo hardinfo
+sudo lscpu
+lshw --short
+lshw
+sudo lshw-gtk
+lscpu
+ 
+ 
+ 
+// use i-nex 
