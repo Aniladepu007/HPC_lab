@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <pthread.h>
@@ -25,7 +24,7 @@ void runner() {
       s += temp[0];
       temp[0] = s;
       FILE *fp = fopen((const char *)temp[0].c_str(),"w");
-      cout<<"\t\tCreated file : "<<temp[0]<<endl;
+      cout<<"\nCreated file : "<<temp[0]<<endl;
 
       char eachLine[stoi(temp[1])];
       vector<string> clientMsg;
@@ -36,12 +35,11 @@ void runner() {
       }
       for(auto x : clientMsg){ fputs(x.c_str(), fp); }
       fclose(fp);
-      cout<<"\t\tTransfer Successful!\n";
+      cout<<"Transfer Successful!\n\nClosing connection!\n";
       close(client_socket);
 }
 
-int32_t main(int count, char* arg[]) {
-      ll n = atoi(arg[1]);
+int32_t main() {
       ll sockfd,portNo = 9898;
       sockfd = socket(AF_INET, SOCK_STREAM, 0);
       struct sockaddr_in server_addr;
@@ -50,27 +48,12 @@ int32_t main(int count, char* arg[]) {
       server_addr.sin_port = htons(portNo);
 
       bind(sockfd, (struct sockaddr *) &server_addr, sizeof(server_addr));
-      listen(sockfd ,n+1);
+      listen(sockfd ,2);
 
-      pid_t pid; ll i=0;
-      while(i < n) {
-            cout<<"Listening on port :"<<portNo<<endl;
-            client_socket = accept(sockfd, NULL, NULL);
-            if(client_socket < 0) { cerr<<"Connection failed\n"<<endl; return 0; }
-            else {
-                  pid = fork();
-                  if(pid > 0) {
-                        cout << "\n\tConnection successful";
-                        i += 1;
-                        cout<<"\n\t\tCreated child process - "<<i<<" with ProcessID "<<pid<<endl;
-                        wait(NULL);
-                        cout<<"\tClosing connection!\n\n";
-                  }
-                  else {
-                        //sleep(1);
-                        if(client_socket) runner();
-                        exit(0);
-                  }
-            }
-      }
+      cout<<"Listening on port :"<<portNo<<endl;
+      client_socket = accept(sockfd, NULL, NULL);
+      if(client_socket < 0) { cerr<<"Connection failed\n"<<endl; return 0; }
+      else { cout << "Connection successful" << endl; }
+
+      runner();
 }
