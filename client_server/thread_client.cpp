@@ -9,14 +9,14 @@
 typedef int ll;
 typedef unsigned long long ull;
 using namespace std;
-//#include<netdb.h>
+#include<arpa/inet.h>
 
 int32_t main(int count, char* argv[]) {
       ll sockFd;
       sockFd = socket(AF_INET, SOCK_STREAM, 0);
       struct sockaddr_in server_addr;
       server_addr.sin_family = AF_INET;
-      server_addr.sin_addr.s_addr = INADDR_ANY;
+      server_addr.sin_addr.s_addr = inet_addr("192.168.43.243");
       server_addr.sin_port = htons(9898);
 
       ll connection = connect(sockFd, (struct sockaddr *) &server_addr, sizeof(server_addr));
