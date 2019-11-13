@@ -17,7 +17,7 @@ int32_t main(int count, char* argv[]) {
       sockFd = socket(AF_INET, SOCK_STREAM, 0);
       struct sockaddr_in server_addr;
       server_addr.sin_family = AF_INET;
-      server_addr.sin_addr.s_addr = inet_addr("192.168.1.109");
+      server_addr.sin_addr.s_addr = inet_addr("192.168.0.102");
       server_addr.sin_port = htons(9898);
 
       ll connection = connect(sockFd, (struct sockaddr *) &server_addr, sizeof(server_addr));
