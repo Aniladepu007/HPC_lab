@@ -4,20 +4,21 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include<arpa/inet.h>
 #define endl "\n"
 #define pb push_back
 typedef int ll;
 typedef unsigned long long ull;
 using namespace std;
-#include<arpa/inet.h>
+//#include<netdb.h>
 
 int32_t main(int count, char* argv[]) {
       ll sockFd;
       sockFd = socket(AF_INET, SOCK_STREAM, 0);
       struct sockaddr_in server_addr;
       server_addr.sin_family = AF_INET;
-      server_addr.sin_addr.s_addr = inet_addr("192.168.1.109");
-      server_addr.sin_port = htons(9898);
+      server_addr.sin_addr.s_addr = inet_addr("192.168.43.243");
+      server_addr.sin_port = htons(9999);
 
       ll connection = connect(sockFd, (struct sockaddr *) &server_addr, sizeof(server_addr));
       ll maxSize = INT_MIN;
